@@ -1,0 +1,36 @@
+{
+  "name": "youtube2mp3",
+  "version": "1.0.0",
+  "description": "Interactive CLI that converts YouTube videos to MP3 (320/192/96 kbps) or FLAC, with bundled ffmpeg and yt-dlp.",
+  "bin": {
+    "youtube2mp3": "bin/youtube2mp3.js"
+  },
+  "main": "lib/converter.js",
+  "files": [
+    "bin",
+    "lib",
+    "scripts"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "start": "node bin/youtube2mp3.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fullstackjefsong/youtube2mp3.git"
+  },
+  "keywords": [
+    "youtube",
+    "mp3",
+    "flac",
+    "cli",
+    "converter",
+    "yt-dlp",
+    "ffmpeg"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,5 @@
+node_modules/
+vendor/
+*.part
+*.mp3
+*.flac
