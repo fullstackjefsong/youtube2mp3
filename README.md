@@ -27,8 +27,10 @@ cd youtube2mp3
 ### Alternative: one-liner without cloning (Node.js 20+ already installed)
 
 ```bash
-npm install -g github:fullstackjefsong/youtube2mp3
+npm install -g github:fullstackjefsong/youtube2mp3 --allow-scripts=youtube2mp3
 ```
+
+If your npm version skips install scripts, yt-dlp and FFmpeg are downloaded automatically the first time you run `youtube2mp3`.
 
 The setup script:
 

@@ -40,7 +40,7 @@ if ($LASTEXITCODE -ne 0) { Write-Host 'npm install failed.' -ForegroundColor Red
 
 # 3. Register the global command (links this folder, so "git pull" updates it)
 Write-Step 'Registering the global "youtube2mp3" command...'
-& npm install -g . --no-fund --no-audit
+& npm install -g . --no-fund --no-audit --ignore-scripts
 if ($LASTEXITCODE -ne 0) { Write-Host 'Global install failed.' -ForegroundColor Red; exit 1 }
 
 # 4. Ensure npm's global bin folder is on the user PATH

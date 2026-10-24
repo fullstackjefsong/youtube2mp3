@@ -50,11 +50,11 @@ npm install --no-fund --no-audit --foreground-scripts
 
 # 3. Register the global command (links this folder, so "git pull" updates it)
 step 'Registering the global "youtube2mp3" command...'
-if ! npm install -g . --no-fund --no-audit 2>/dev/null; then
+if ! npm install -g . --no-fund --no-audit --ignore-scripts 2>/dev/null; then
   step 'No permission for the global npm folder - using ~/.npm-global instead'
   mkdir -p "$HOME/.npm-global"
   npm config set prefix "$HOME/.npm-global"
-  npm install -g . --no-fund --no-audit
+  npm install -g . --no-fund --no-audit --ignore-scripts
 fi
 
 # 4. Ensure npm's global bin folder is on PATH
