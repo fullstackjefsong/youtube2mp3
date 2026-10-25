@@ -14,6 +14,42 @@ const dim = c('2');
 const red = c('31');
 const green = c('32');
 const cyan = c('36');
+const yellow = c('33');
+
+const APP_ART = [
+  "                    _         _          ____                 _____",
+  "  _   _  ___  _   _| |_ _   _| |__   ___|___ \\ _ __ ___  _ __|___ /",
+  " | | | |/ _ \\| | | | __| | | | '_ \\ / _ \\ __) | '_ ` _ \\| '_ \\ |_ \\",
+  " | |_| | (_) | |_| | |_| |_| | |_) |  __// __/| | | | | | |_) |__) |",
+  "  \\__, |\\___/ \\__,_|\\__|\\__,_|_.__/ \\___|_____|_| |_| |_| .__/____/",
+  "  |___/                                                 |_|",
+];
+const USER_ART = [
+  "   __      _ _    _           _    _      __",
+  "  / _|_  _| | |__| |_ __ _ __| |__(_)___ / _|___ ___ _ _  __ _",
+  " |  _| || | | (_-<  _/ _` / _| / /| / -_)  _(_-</ _ \\ ' \\/ _` |",
+  " |_|  \\_,_|_|_/__/\\__\\__,_\\__|_\\_\\/ \\___|_| /__/\\___/_||_\\__, |",
+  "                                |__/                     |___/",
+];
+
+function banner() {
+  const width = Math.max(...APP_ART.map((l) => l.length), ...USER_ART.map((l) => l.length)) + 2;
+  const rule = `+${'='.repeat(width)}+`;
+  const row = (s, color = (x) => x) => `${dim('|')}${color(s.padEnd(width))}${dim('|')}`;
+  const left = ' YouTube -> MP3 / FLAC converter';
+  const right = `v${pkg.version} `;
+  const tagline = left + right.padStart(width - left.length);
+  return [
+    dim(rule),
+    ...APP_ART.map((l) => row(l, (x) => bold(red(x)))),
+    row(''),
+    row('   by', dim),
+    ...USER_ART.map((l) => row(l, cyan)),
+    row(''),
+    row(tagline, yellow),
+    dim(rule),
+  ].join('\n');
+}
 
 const HELP = `
 ${bold('youtube2mp3')} v${pkg.version} - convert YouTube videos to MP3 / FLAC
@@ -144,7 +180,7 @@ async function main() {
     return 2;
   }
 
-  console.log(`\n${bold('youtube2mp3')} ${dim(`v${pkg.version}`)}\n`);
+  console.log(`\n${banner()}\n`);
   const prompter = createPrompter();
   try {
     const info = await promptForVideo(prompter, args[0]);
