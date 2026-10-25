@@ -19,6 +19,12 @@ const log = (m) => console.log(`[youtube2mp3] ${m}`);
     ok = false;
     console.warn(`[youtube2mp3] Warning: could not download ffmpeg (${err.message}).`);
   }
-  // Don't fail the npm install: missing pieces are fetched again on first run.
-  if (!ok) console.warn('[youtube2mp3] Missing components will be downloaded automatically the first time you run youtube2mp3.');
+  if (!ok) {
+    if (process.argv.includes('--strict')) {
+      console.error('[youtube2mp3] Setup failed: required dependencies are missing.');
+      process.exitCode = 1;
+    } else {
+      console.warn('[youtube2mp3] Missing components will be downloaded automatically the first time you run youtube2mp3.');
+    }
+  }
 })();
