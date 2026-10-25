@@ -32,23 +32,48 @@ const USER_ART = [
   "                                |__/                     |___/",
 ];
 
+const REELS = [
+  "  ,------.                                  ,------.",
+  " / ,----. \\    .----------------------.    / ,----. \\",
+  "| | (()) | |===|  ==================  |===| | (()) | |",
+  " \\ `----' /    '----------------------'    \\ `----' /",
+  "  `------'                                  `------'",
+];
+
+// Draws a cassette tape: label with app/user names, tape window with reels, and the bottom tab.
 function banner() {
-  const width = Math.max(...APP_ART.map((l) => l.length), ...USER_ART.map((l) => l.length)) + 2;
-  const rule = `+${'='.repeat(width)}+`;
-  const row = (s, color = (x) => x) => `${dim('|')}${color(s.padEnd(width))}${dim('|')}`;
-  const left = ' YouTube -> MP3 / FLAC converter';
-  const right = `v${pkg.version} `;
-  const tagline = left + right.padStart(width - left.length);
-  return [
-    dim(rule),
-    ...APP_ART.map((l) => row(l, (x) => bold(red(x)))),
-    row(''),
-    row('   by', dim),
-    ...USER_ART.map((l) => row(l, cyan)),
-    row(''),
-    row(tagline, yellow),
-    dim(rule),
-  ].join('\n');
+  const artWidth = Math.max(...APP_ART.map((l) => l.length), ...USER_ART.map((l) => l.length));
+  const inner = artWidth + 6;
+  const center = (s, w) => {
+    const pad = Math.max(0, w - s.length);
+    return ' '.repeat(Math.floor(pad / 2)) + s + ' '.repeat(Math.ceil(pad / 2));
+  };
+  const shell = (s) => `${dim('|')}${s}${dim('|')}`;
+  const label = (s, color = (x) => x) => shell(` ${dim('|')}${color(center(s, inner - 4))}${dim('|')} `);
+  const reelWidth = Math.max(...REELS.map((l) => l.length));
+  const sideA = 'SIDE A';
+  const ver = `v${pkg.version}`;
+  const labelTop = ` SIDE A ${'-'.repeat(inner - 4 - sideA.length - ver.length - 4)} ${ver} `;
+  const tagline = 'YouTube -> MP3 / FLAC  *  320k  *  HI-FI  *  C-90';
+
+  const lines = [
+    dim(` ${'_'.repeat(inner)} `),
+    shell(dim(` ${'_'.repeat(inner - 2)} `)),
+    shell(` ${dim('|')}${yellow(labelTop)}${dim('|')} `),
+    ...APP_ART.map((l) => label(l.padEnd(artWidth), (x) => bold(red(x)))),
+    label(''),
+    label('-- by --', dim),
+    ...USER_ART.map((l) => label(l.padEnd(artWidth), cyan)),
+    shell(dim(` |${'_'.repeat(inner - 4)}| `)),
+    shell(' '.repeat(inner)),
+    ...REELS.map((l) => shell(yellow(center(l.padEnd(reelWidth), inner)))),
+    shell(' '.repeat(inner)),
+    shell(yellow(center(tagline, inner))),
+    shell(dim(center(`  ${'_'.repeat(reelWidth)}  `, inner))),
+    shell(dim(center(` /  O     [ ]${' '.repeat(reelWidth - 22)}[ ]     O  \\ `, inner))),
+    dim(`|${'_'.repeat(Math.floor((inner - reelWidth - 6) / 2))}/${'_'.repeat(reelWidth + 4)}\\${'_'.repeat(Math.ceil((inner - reelWidth - 6) / 2))}|`),
+  ];
+  return lines.join('\n');
 }
 
 const HELP = `
